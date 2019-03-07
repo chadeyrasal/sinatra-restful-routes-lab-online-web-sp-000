@@ -1,106 +1,50 @@
-#class ApplicationController < Sinatra::Base
-#  configure do
-#    set :public_folder, 'public'
-#    set :views, 'app/views'
-#  end
-
-#  get "/recipes/new" do
-#    erb :new
-#  end
-
-#  get "/" do
-#    redirect "/recipes"
-#  end
-
-#  get "/recipes" do
-#    @recipes = Recipe.all
-#    erb :index
-#  end
-
-#  get "/recipes/:id" do
-#    @recipe = Recipe.find_by_id(params[:id])
-#    erb :show
-#  end
-
-#  get "/recipes/:id/edit" do
-#    @recipe = Recipe.find_by_id(params[:id])
-#    erb :edit
-#  end
-
-#  patch "/recipes/:id" do
-#    @recipe = Recipe.find_by_id(params[:id])
-#    @recipe.name = params[:name]
-#    @recipe.ingredients = params[:ingredients]
-#    @recipe.cook_time = params[:cook_time]
-#    @recipe.save
-#    redirect "/recipes/#{@recipe.id}"
-#  end
-
-#  post "/recipes" do
-#    @recipe = Recipe.create(params)
-#    redirect "/recipes/#{@recipe.id}"
-#  end
-
-#  delete "/recipes/:id" do
-#    @recipe = Recipe.find_by_id(params[:id])
-#    @recipe.delete
-#    redirect "/recipes"
-#  end
-
-#end
-
-
-
-
-
-require './config/environment'
-
 class ApplicationController < Sinatra::Base
-  # register Sinatra::ActiveRecordExtension
-  set :views, Proc.new { File.join(root, "../views/") }
-
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
   end
 
-  get '/recipes/new' do #loads new form
+  get "/recipes/new" do
     erb :new
   end
 
-  get '/recipes' do #loads index page
+  get "/" do
+    redirect "/recipes"
+  end
+
+  get "/recipes" do
     @recipes = Recipe.all
     erb :index
   end
 
-  get '/recipes/:id' do  #loads show page
+  get "/recipes/:id" do
     @recipe = Recipe.find_by_id(params[:id])
     erb :show
   end
 
-  get '/recipes/:id/edit' do #loads edit form
+  get "/recipes/:id/edit" do
     @recipe = Recipe.find_by_id(params[:id])
     erb :edit
   end
 
-  patch '/recipes/:id' do  #updates a recipe
+  patch "/recipes/:id" do
     @recipe = Recipe.find_by_id(params[:id])
     @recipe.name = params[:name]
     @recipe.ingredients = params[:ingredients]
     @recipe.cook_time = params[:cook_time]
     @recipe.save
-    redirect to "/recipes/#{@recipe.id}"
+    redirect "/recipes/#{@recipe.id}"
   end
 
-  post '/recipes' do  #creates a recipe
+  post "/recipes" do
     @recipe = Recipe.create(params)
-    redirect to "/recipes/#{@recipe.id}"
+    redirect "/recipes/#{@recipe.id}"
   end
 
-  delete '/recipes/:id' do #destroy action
+  delete "/recipes/:id" do
     @recipe = Recipe.find_by_id(params[:id])
     @recipe.delete
-    redirect to '/recipes'
+    redirect "/recipes"
   end
 
 end
